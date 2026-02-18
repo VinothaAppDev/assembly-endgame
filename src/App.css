@@ -1,0 +1,35 @@
+hgroup{
+    font-style: Medium;
+    text-align: center;
+}
+
+hgroup h3{
+    color: #F9F4DA;
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+}
+
+hgroup p{
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: #8E8E8E;
+}
+
+.status-bar{
+    background-color: #10A95B;
+    margin: 3vh;
+    text-align: center;
+    padding: 2vh;
+    width: 60vw;
+    color: #F9F4DA;
+    border-radius: 10px;
+    font-weight: 500;
+    font-style: Medium;
+    h3{
+        font-size: 1.3rem;
+    }
+    p{
+        font-size: 1rem;
+    }
+}
