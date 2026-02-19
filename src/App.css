@@ -50,10 +50,10 @@ hgroup p{
     margin: 5vh;
 }
 
-span.letter{
+span.word-letter{
     color: #F9F4DA;
-    width: 4vw;
-    height: 4vw;
+    height: 7vh;
+    width: 7vh;
     background-color: #323232;
     border-bottom: 1px solid #F9F4DA;
     display: flex;
@@ -62,4 +62,25 @@ span.letter{
     font-weight: 700;
     font-style: Bold;
     font-size: 1.5rem;
+}
+
+.key-board{
+    display: flex;
+    justify-content: center;
+    max-width: 60vw;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.alphabet{
+    background-color : #FCBA29;
+    border : 1px solid #D7D7D7;
+    border-radius: 5px;
+    height: 7vh;
+    width: 7vh;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
 }
