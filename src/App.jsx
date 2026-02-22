@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useEffect } from 'react';
 import './App.css'
 import { languages } from './languages'
 import clsx from 'clsx';
 import farewellMsgPicker from './utils/farewellMsgPicker';
 import cheerUpMsgPicker from './utils/cheerUpMsgPicker'
 import newWordPicker from './utils/newWordPicker';
+import Confetti from "react-confetti"
 
 /**
  * Backlog:
@@ -20,8 +22,14 @@ import newWordPicker from './utils/newWordPicker';
  */
 
 export default function App() {
+    
+    
 
-    const [currentWord, setCurrentWord] = useState(()=>newWordPicker());
+    const [currentWord, setCurrentWord] = useState(() => newWordPicker());
+    
+    useEffect(()=>{
+        console.log(currentWord)
+    },[])
 
     const letters = "abcdefghijklmnopqrstuvwxyz"
 
@@ -33,7 +41,7 @@ export default function App() {
     // const isGameOver = (wrongGuessCount==8 || guessedLetters.length-wrongGuessCount===charset.size) ? true : false
 
     const isGameWon = Array.from(currentWord).every(letter => guessedLetters.includes(letter))
-    const isGameLost = wrongGuessCount == (languages.length-1)
+    const isGameLost = wrongGuessCount == (languages.length - 1)
 
     const isGameOver = isGameLost || isGameWon
 
@@ -42,7 +50,7 @@ export default function App() {
 
         const condition = isGameOver && (!isGuessed)
 
-        const classNames = clsx("word-letter",{lettersNotGuessed : condition})
+        const classNames = clsx("word-letter", { lettersNotGuessed: condition })
 
         return (
             <span className={classNames} key={index}>{isGuessed ? letter.toUpperCase() : (isGameOver ? letter.toUpperCase() : "")}</span>
@@ -108,8 +116,8 @@ export default function App() {
 
     const lastGuess = guessedLetters.at(-1)
 
-    const isWrongGuess = guessedLetters.length>0 && (!currentWord.includes(lastGuess))
-    const isRightGuess = guessedLetters.length>0 && (currentWord.includes(lastGuess))
+    const isWrongGuess = guessedLetters.length > 0 && (!currentWord.includes(lastGuess))
+    const isRightGuess = guessedLetters.length > 0 && (currentWord.includes(lastGuess))
 
     function statusBarContentRender() {
         let statusBarContent = null;
@@ -132,13 +140,13 @@ export default function App() {
                 )
             }
         }
-        else if (guessedLetters.length>0) {
-            if(!currentWord.includes(guessedLetters.at(-1))){
+        else if (guessedLetters.length > 0) {
+            if (!currentWord.includes(guessedLetters.at(-1))) {
                 statusBarContent = (
                     <p>{farewellMsgPicker(languages[wrongGuessCount - 1].name)}</p>
                 )
             }
-            else{
+            else {
                 statusBarContent = (
                     <p>{cheerUpMsgPicker()}</p>
                 )
@@ -151,10 +159,15 @@ export default function App() {
 
     const statusBarSectionClass = clsx("status-bar", {
         rightGuess: isRightGuess,
-        wrongGuess : isWrongGuess,
+        wrongGuess: isWrongGuess,
         won: isGameWon,
         lost: isGameLost
     })
+
+    function ConfettiDropRender() {
+        const width = window.innerWidth;
+        return <Confetti width={width} />;
+    }
 
     return (
         <main>
@@ -176,21 +189,21 @@ export default function App() {
             <section className="wordBox">
                 {wordBox}
             </section>
-            <section 
+            <section
                 className="sr-only"
                 aria-live='polite'
                 role='status'
             >
                 <p>
-                    {currentWord.includes(lastGuess) ? 
+                    {currentWord.includes(lastGuess) ?
                         `You are correct! ${lastGuess} is in the word.` :
-                        `You are wrong! ${lastGuess} is not in the word.`    
+                        `You are wrong! ${lastGuess} is not in the word.`
                     }
-                    you have {langBoxes.length-1 - wrongGuessCount} attempts left.
+                    you have {langBoxes.length - 1 - wrongGuessCount} attempts left.
                 </p>
                 <p>{`current word: 
-                        ${currentWord.split("").map(letter => 
-                            guessedLetters.includes(letter) ? letter+"." : "blank.").join(" ")}
+                        ${currentWord.split("").map(letter =>
+                    guessedLetters.includes(letter) ? letter + "." : "blank.").join(" ")}
                     `}
                 </p>
             </section>
@@ -200,6 +213,7 @@ export default function App() {
             {isGameOver && <button className="new-game-btn" onClick={newGameCaller}>
                 New Game
             </button>}
+            {isGameWon && ConfettiDropRender()}
         </main>
     )
 }
