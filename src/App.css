@@ -143,6 +143,16 @@ span.lettersNotGuessed{
     /* cursor: not-allowed; */
 }
 
+.sr-only{
+    height: 1px;
+    width: 1px;
+    color: transparent;
+    position: absolute;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+}
+
 @media screen and (max-width: 500px) {
     .key-board{
         min-width: 80vw;

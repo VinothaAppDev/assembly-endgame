@@ -4,6 +4,7 @@ import { languages } from './languages'
 import clsx from 'clsx';
 import farewellMsgPicker from './utils/farewellMsgPicker';
 import cheerUpMsgPicker from './utils/cheerUpMsgPicker'
+import newWordPicker from './utils/newWordPicker';
 
 /**
  * Backlog:
@@ -20,7 +21,7 @@ import cheerUpMsgPicker from './utils/cheerUpMsgPicker'
 
 export default function App() {
 
-    const [currentWord, setCurrentWord] = useState("elephant");
+    const [currentWord, setCurrentWord] = useState(newWordPicker());
 
     const letters = "abcdefghijklmnopqrstuvwxyz"
 
@@ -68,6 +69,8 @@ export default function App() {
 
         return (
             <button
+                aria-disabled={guessedLetters.includes(letter)}
+                aria-label={`Letter ${letter}`}
                 style={letterStyles}
                 className='alphabet'
                 key={letter}
@@ -99,7 +102,8 @@ export default function App() {
     })
 
     function newGameCaller() {
-        // to do
+        setCurrentWord(newWordPicker())
+        setGuessedLetters("")
     }
 
     const lastGuess = guessedLetters.at(-1)
@@ -159,6 +163,8 @@ export default function App() {
                 <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </hgroup>
             <section
+                aria-live='polite'
+                role='Status'
                 className={statusBarSectionClass}
             // style={statusBarSectionStyles}
             >
@@ -169,6 +175,24 @@ export default function App() {
             </section>
             <section className="wordBox">
                 {wordBox}
+            </section>
+            <section 
+                className="sr-only"
+                aria-live='polite'
+                role='status'
+            >
+                <p>
+                    {currentWord.includes(lastGuess) ? 
+                        `You are correct! ${lastGuess} is in the word.` :
+                        `You are wrong! ${lastGuess} is not in the word.`    
+                    }
+                    you have {langBoxes.length-1 - wrongGuessCount} attempts left.
+                </p>
+                <p>{`current word: 
+                        ${currentWord.split("").map(letter => 
+                            guessedLetters.includes(letter) ? letter+"." : "blank.").join(" ")}
+                    `}
+                </p>
             </section>
             <section className={isGameOver ? "key-board disable" : "key-board"}>
                 {keyboard}
