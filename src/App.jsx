@@ -2,8 +2,8 @@ import { useState } from 'react'
 import './App.css'
 import { languages } from './languages'
 import clsx from 'clsx';
-import farewellMsgPicker from './utils';
-import cheerUpMsgPicker from './cheeUpmsgs'
+import farewellMsgPicker from './utils/farewellMsgPicker';
+import cheerUpMsgPicker from './utils/cheerUpMsgPicker'
 
 /**
  * Backlog:
