@@ -1,18 +1,25 @@
 import { useState } from 'react'
 import './App.css'
 import { languages } from './languages'
+import clsx from 'clsx';
 
-export default function App(){
+export default function App() {
 
-    const [ currentWord, setCurrentWord ] = useState("elephant");
+    const [currentWord, setCurrentWord] = useState("elephant");
 
     const letters = "abcdefghijklmnopqrstuvwxyz"
 
-    const [ guessedLetters, setGuessedLetters ] = useState("")
+    const [guessedLetters, setGuessedLetters] = useState("")
 
     const wrongGuessCount = Array.from(guessedLetters).filter(guessedLetter => !currentWord.includes(guessedLetter)).length
 
-    // console.log(wrongGuessCount)
+    // const charset = new Set(currentWord)
+    // const isGameOver = (wrongGuessCount==8 || guessedLetters.length-wrongGuessCount===charset.size) ? true : false
+
+    const isGameWon = Array.from(currentWord).every(letter => guessedLetters.includes(letter))
+    const isGameLost = wrongGuessCount == 8
+
+    const isGameOver = isGameLost || isGameWon
 
     const wordBox = Array.from(currentWord).map((letter, index) => {
         const isGuessed = guessedLetters.includes(letter)
@@ -21,12 +28,10 @@ export default function App(){
             <span className='word-letter' key={index}>{isGuessed ? letter.toUpperCase() : ""}</span>
         )
     })
-    
-    // console.log(guessedLetters)
 
     const alphabetChosen = (letter) => {
         setGuessedLetters((prev) => (
-            prev.includes(letter) ? prev : (prev+letter)
+            prev.includes(letter) ? prev : (prev + letter)
         ))
     }
 
@@ -35,29 +40,29 @@ export default function App(){
 
         let letterStyles
 
-        if(isGuessed){
-            if(currentWord.includes(letter))
+        if (isGuessed) {
+            if (currentWord.includes(letter))
                 letterStyles = { backgroundColor: "#10A95B" }
             else
-                letterStyles = { backgroundColor: "#EC5D49 "}
+                letterStyles = { backgroundColor: "#EC5D49 " }
         }
 
         return (
-            <button 
+            <button
                 style={letterStyles}
-                className='alphabet' 
-                key={letter} 
-                onClick={()=>alphabetChosen(letter)}
+                className='alphabet'
+                key={letter}
+                onClick={() => alphabetChosen(letter)}
             >
-                    {letter.toUpperCase()}
+                {letter.toUpperCase()}
             </button>
         )
     })
 
     const langBoxes = languages.map((obj, index) => {
         const styles = {
-            backgroundColor : obj.backgroundColor,
-            color : obj.color,
+            backgroundColor: obj.backgroundColor,
+            color: obj.color,
             padding: "5px",
             borderRadius: "5px",
             display: "inline-block",
@@ -66,17 +71,45 @@ export default function App(){
         }
         return (
             <div
-                className={wrongGuessCount>=(index+1) ? "lost" : ""} 
-                style={styles} 
+                className={wrongGuessCount >= (index + 1) ? "lost" : ""}
+                style={styles}
                 key={obj.name}>
-                    {obj.name}
+                {obj.name}
             </div>
         )
     })
 
-    function newGameCaller(){
+    function newGameCaller() {
         // to do
     }
+
+    function statusBarRender() {
+        let content = null;
+        if (isGameOver) {
+            if (isGameWon) {
+                content = (
+                    <>
+                        <h3>You Win</h3>
+                        <p>Well done! 🎉</p>
+                    </>
+                )
+            }
+            else {
+                content = (
+                    <>
+                        <h3>Game over!</h3>
+                        <p>You lose! Better start learning Assembly 😭</p>
+                    </>
+                )
+            }
+        }
+        return content;
+    }
+
+    const statusBarSectionClass = clsx("status-bar", {
+        won: isGameWon,
+        lost: isGameLost
+    })
 
     return (
         <main>
@@ -84,9 +117,11 @@ export default function App(){
                 <h3>Assembly: Endgame</h3>
                 <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </hgroup>
-            <section className="status-bar">
-                <h3>You Win</h3>
-                <p>Well done! 🎉</p>
+            <section
+                className={statusBarSectionClass}
+            // style={statusBarSectionStyles}
+            >
+                {statusBarRender()}
             </section>
             <section className="langBoxContainer">
                 {langBoxes}
@@ -97,9 +132,9 @@ export default function App(){
             <section className="key-board">
                 {keyboard}
             </section>
-            <button className="new-game-btn" onClick={newGameCaller}>
+            {isGameOver && <button className="new-game-btn" onClick={newGameCaller}>
                 New Game
-            </button>
+            </button>}
         </main>
     )
 }

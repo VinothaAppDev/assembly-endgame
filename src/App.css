@@ -17,21 +17,33 @@ hgroup p{
 }
 
 .status-bar{
-    background-color: #10A95B;
+    background-color: transparent;
     margin: 3vh;
     text-align: center;
-    padding: 2vh;
+    height: 10vh;
     width: 60vw;
     color: #F9F4DA;
     border-radius: 10px;
     font-weight: 500;
     font-style: Medium;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     h3{
         font-size: 1.3rem;
     }
     p{
         font-size: 1rem;
     }
+}
+
+.won{
+    background-color: #10A95B;
+}
+
+.lost{
+    background-color: #BA2A2A;
 }
 
 .langBoxContainer{
