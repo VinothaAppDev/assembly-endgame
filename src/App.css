@@ -1,22 +1,22 @@
-hgroup{
+hgroup {
     font-style: Medium;
     text-align: center;
+
+    h3 {
+        color: #F9F4DA;
+        font-weight: 500;
+        font-size: 1.5rem;
+        margin-bottom: 1vh;
+    }
+
+    p {
+        font-weight: 500;
+        font-size: 1.3rem;
+        color: #8E8E8E;
+    }
 }
 
-hgroup h3{
-    color: #F9F4DA;
-    font-weight: 500;
-    font-size: 1.5rem;
-    margin-bottom: 1vh;
-}
-
-hgroup p{
-    font-weight: 500;
-    font-size: 1.3rem;
-    color: #8E8E8E;
-}
-
-.status-bar{
+.status-bar {
     background-color: transparent;
     margin: 3vh;
     text-align: center;
@@ -30,31 +30,33 @@ hgroup p{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    h3{
+
+    h3 {
         font-size: 1.3rem;
     }
-    p{
+
+    p {
         font-size: 1rem;
     }
 }
 
-.rightGuess{
+.rightGuess {
     background-color: #4CAF50;
 }
 
-.wrongGuess{
+.wrongGuess {
     background-color: #7A5EA7;
 }
 
-.won{
+.won {
     background-color: #10A95B;
 }
 
-.lost{
+.lost {
     background-color: #BA2A2A;
 }
 
-.langBoxContainer{
+.langBoxContainer {
     display: flex;
     flex-wrap: wrap;
     max-width: 50vw;
@@ -63,27 +65,27 @@ hgroup p{
     margin: 10px;
 }
 
-.langBoxContainer > .lost::after{
+.langBoxContainer>.lost::after {
     content: "💀";
     position: absolute;
     inset: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  background-color: rgba(0, 0, 0, 0.6);
-  font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 1rem;
 }
 
-.wordBox{
+.wordBox {
     display: flex;
     flex-direction: row;
     gap: 3px;
     margin: 5vh;
 }
 
-span.word-letter{
+span.word-letter {
     color: #F9F4DA;
     height: 7vh;
     width: 7vh;
@@ -97,11 +99,11 @@ span.word-letter{
     font-size: 1.5rem;
 }
 
-span.lettersNotGuessed{
-    color: #EC5D49;   
+span.lettersNotGuessed {
+    color: #EC5D49;
 }
 
-.key-board{
+.key-board {
     display: flex;
     justify-content: center;
     max-width: 45vw;
@@ -110,9 +112,9 @@ span.lettersNotGuessed{
     gap: 8px;
 }
 
-.alphabet{
-    background-color : #FCBA29;
-    border : 1px solid #D7D7D7;
+.alphabet {
+    background-color: #FCBA29;
+    border: 1px solid #D7D7D7;
     border-radius: 5px;
     height: 7vh;
     width: 7vh;
@@ -123,7 +125,7 @@ span.lettersNotGuessed{
     cursor: pointer;
 }
 
-.new-game-btn{
+.new-game-btn {
     background-color: #11B5E5;
     border: 1px solid #D7D7D7;
     font-weight: 600;
@@ -136,14 +138,14 @@ span.lettersNotGuessed{
     margin-top: 4vh;
 }
 
-.disable{
+.disable {
     pointer-events: none;
     opacity: 0.5;
     /* filter: grayscale(40%); */
     /* cursor: not-allowed; */
 }
 
-.sr-only{
+.sr-only {
     height: 1px;
     width: 1px;
     color: transparent;
@@ -154,8 +156,41 @@ span.lettersNotGuessed{
 }
 
 @media screen and (max-width: 500px) {
-    .key-board{
+    .hgroup h3 {
+        font-size: 1rem;
+    }
+
+    .hgroup p {
+        font-size: 0.8rem;
+    }
+
+    .status-bar {
+        width: 80vw;
+        h3 {
+            font-size: 1rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .langBoxContainer {
+        max-width: 60vw;
+    }
+
+    .key-board {
         min-width: 80vw;
         /* max-width: 70vw; */
+    }
+
+    .alphabet {
+        height: 5vh;
+        width: 5vh;
+    }
+
+    span.word-letter {
+        height: 5vh;
+        width: 5vh;
     }
 }
