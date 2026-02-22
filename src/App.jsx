@@ -10,6 +10,10 @@ export default function App(){
 
     const [ guessedLetters, setGuessedLetters ] = useState("")
 
+    const wrongGuessCount = Array.from(guessedLetters).filter(guessedLetter => !currentWord.includes(guessedLetter)).length
+
+    // console.log(wrongGuessCount)
+
     const wordBox = Array.from(currentWord).map((letter, index) => {
         const isGuessed = guessedLetters.includes(letter)
 
@@ -18,7 +22,7 @@ export default function App(){
         )
     })
     
-    console.log(guessedLetters)
+    // console.log(guessedLetters)
 
     const alphabetChosen = (letter) => {
         setGuessedLetters((prev) => (
@@ -50,15 +54,23 @@ export default function App(){
         )
     })
 
-    const langBoxes = languages.map((obj) => {
+    const langBoxes = languages.map((obj, index) => {
         const styles = {
             backgroundColor : obj.backgroundColor,
             color : obj.color,
             padding: "5px",
-            borderRadius: "5px"
+            borderRadius: "5px",
+            display: "inline-block",
+            position: "relative",
+            overflow: "hidden"
         }
         return (
-            <div style={styles} key={obj.name}>{obj.name}</div>
+            <div
+                className={wrongGuessCount>=(index+1) ? "lost" : ""} 
+                style={styles} 
+                key={obj.name}>
+                    {obj.name}
+            </div>
         )
     })
 
